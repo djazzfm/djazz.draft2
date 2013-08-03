@@ -4,6 +4,7 @@ from distutils.core import setup
 
 
 packages = ['djazz']
+datas = {'djazz': ['templates/djazz/formatters/*']}
 
 setup(name='Djazz',
       version='0.1',
@@ -12,6 +13,7 @@ setup(name='Djazz',
       author_email='dugas.guillaume@gmail.com',
       url='http://github.com/djazzproject/djazz',
       packages=packages,
+      package_data=datas,
       classifiers=[
           "Development Status :: 1 - Planning",
           "Framework :: Django",
