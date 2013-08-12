@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.conf import settings
 
 
 class Config(models.Model):
@@ -33,8 +34,6 @@ class Post(models.Model):
             super(Post.FormatterUnavailable, self).__init__(m)
 
     title = models.CharField(max_length=240, null=True, blank=True)
-    lang = models.CharField(max_length=10, null=True, blank=True)
-    encoding = models.CharField(max_length=20, null=True, blank=True)
     author = models.ForeignKey(User, related_name="post_author",
                                null=True, blank=True)
     date = models.DateTimeField(blank=True, null=True)
@@ -57,11 +56,11 @@ class Post(models.Model):
             self.type = t
         super(Post, self).save(*args, **kwargs)
     
-    def to_html(self, silent=True):
+    def to_html(self, silent=not settings.DEBUG):
         from django.template import Context, loader
-        from djazz import vdef
+        from djazz.conf import settings as default_settings
         
-        formatters = vdef.get('DJAZZ_FORMATTERS')
+        formatters = default_settings['FORMATTERS']
         fmt = self.format or 'default'
         
         if not silent and not fmt in formatters:
