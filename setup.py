@@ -3,7 +3,7 @@
 from distutils.core import setup
 
 
-packages = ['djazz']
+packages = ['djazz', 'djazz.text']
 datas = {'djazz': ['templates/djazz/formatters/*']}
 
 setup(name='Djazz',
