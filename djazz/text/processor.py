@@ -239,10 +239,8 @@ class Processor(object):
         
         compiled, stack = self.compile(text)
         
-        print stack
-        
         processed = compiled
-        cpattern = re.compile('\x00(\d+)\x01', re.M)
+        cpattern = re.compile('\x0f(\d+)\x0e', re.M)
         
         for m in cpattern.finditer(compiled):
             p = int(m.group(1))
@@ -270,7 +268,7 @@ class Processor(object):
                     args = stack[p][2:]
             
             replacement = func(*args)
-            processed = re.sub('\x00%d\x01' % p,
+            processed = re.sub('\x0f%d\x0e' % p,
                                replacement,
                                processed)
         return processed
